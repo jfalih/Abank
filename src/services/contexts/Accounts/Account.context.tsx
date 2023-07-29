@@ -7,7 +7,7 @@ export interface Accounts {
         monthly: number;
         name: string;
         now: number;
-        target: number;
+        capacity: number;
       }
     | null
     | undefined;

@@ -44,6 +44,7 @@ const Login = () => {
       {
         onSuccess(res) {
           if (res.data.success) {
+            setSession(res.data.data.accessToken);
             mutateUser(
               {
                 token: res.data.data.accessToken,
@@ -51,9 +52,15 @@ const Login = () => {
               {
                 onSuccess(res) {
                   if (res.data.success) {
+                    const resetAction = CommonActions.reset({
+                      index: 0,
+                      routes: [
+                        {
+                          name: 'BottomNavigation',
+                        },
+                      ],
+                    });
                     setUser(res.data.data);
-                    setSession(res.data.data.accessToken);
-
                     Toast.show({
                       type: 'success',
                       text1: 'Yey.. berhasil nih!',
@@ -114,7 +121,7 @@ const Login = () => {
           <Text type="paragraph" weight="medium">
             Don't have an account
           </Text>
-          <Pressable onPress={() => navigation.navigate('Account')}>
+          <Pressable onPress={() => navigation.navigate('Register')}>
             <Text
               color={colors.primary}
               underline

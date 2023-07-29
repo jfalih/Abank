@@ -1,35 +1,28 @@
 import React, {useRef} from 'react';
 import {
-  Box,
   Color,
   Divider,
   HStack,
   Pressable,
   Text,
   VStack,
-} from '../../../components';
-import Icon from '../../../components/atoms/Icon';
-import Container from '../../../components/molecules/Container';
+} from '../../../../components';
+import Icon from '../../../../components/atoms/Icon';
 import {useNavigation, useTheme} from '@react-navigation/native';
 import {ActivityIndicator} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {FlashList} from '@shopify/flash-list';
-import FastImage from 'react-native-fast-image';
-import Input from '../../../components/atoms/Input';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
-import AddName from './components/Modal';
 import {Controller, useForm} from 'react-hook-form';
 import currency from 'currency.js';
-import Modal from './components/Modal';
+import Modal from './Modal';
 import Toast from 'react-native-toast-message';
-import {useAccountContext} from '../../../services/contexts/Accounts/Account.context';
+import {useAccountContext} from '../../../../services/contexts/Accounts/Account.context';
+import {useFamilyContext} from '../../../../services/contexts/Family/Family.context';
 
-const Add = () => {
+const Add = ({route}) => {
   const navigation = useNavigation();
-  const addNameModalRef = useRef<BottomSheetModal>(null);
-  const capacityModalRef = useRef<BottomSheetModal>(null);
-  const monthlyModalRef = useRef<BottomSheetModal>(null);
-  const {setAccounts} = useAccountContext();
+  const {item} = route?.params || {};
+  const limitModalRef = useRef<BottomSheetModal>(null);
+  const {setFamily} = useFamilyContext();
   const ItemSeparatorComponent = () => <Divider horizontal thickness={12} />;
   const {colors} = useTheme();
 
@@ -42,29 +35,29 @@ const Add = () => {
     formState: {errors, isSubmitting},
   } = useForm({
     defaultValues: {
-      name: 'Jajanan',
-      capacity: 0,
+      limit: 0,
       now: 0,
-      type: 'saving',
-      monthly: 0,
+      gender: item?.gender,
+      name: item?.username,
+      status: 'Member',
     },
   });
 
   const handleOnPressSubmit = handleSubmit(data => {
-    if (data.capacity <= data.monthly) {
+    if (data.limit <= 0) {
       Toast.show({
         type: 'error',
         text1: 'Hmm.. Kami nemu error nih!',
-        text2: 'Kapasitas kamu kurang dari monthly transfer..',
+        text2: 'Limit kamu kurang nih..',
       });
     } else {
       Toast.show({
         type: 'success',
         text1: 'Yey.. berhasil nih!',
-        text2: 'Kamu berhasil menambahkan pocket.',
+        text2: 'Kamu berhasil menambahkan family.',
       });
-      setAccounts(prev => {
-        return [{id: prev[prev.length - 1].id + 1, ...data}, ...prev];
+      setFamily(prev => {
+        return [...prev, {id: prev[prev.length - 1].id + 1, ...data}];
       });
       navigation.goBack();
     }
@@ -76,7 +69,7 @@ const Add = () => {
           <Icon name="IconChevronLeft" size={24} />
         </Pressable>
         <Text type="subheading" weight="large">
-          Add New Pocket
+          Add Family Member
         </Text>
       </HStack>
       <VStack
@@ -88,30 +81,32 @@ const Add = () => {
         padding={20}
         spacing={20}
         backgroundColor={Color.shark['50']}>
-        <VStack spacing={4}>
-          <Text color={Color.shark['300']} type="label" weight="small">
-            Pocket Name
-          </Text>
-          <Pressable
-            onPress={() => addNameModalRef?.current?.present()}
-            shrink={false}
-            items="center">
-            <Text fill color={Color.shark['800']} type="heading" weight="small">
-              {watch('name')}
+        <VStack spacing={20}>
+          <VStack
+            borderRadius={30}
+            backgroundColor={'#fff'}
+            width={60}
+            height={60}
+            items="center"
+            justify="center">
+            <Text type="heading" weight="small">
+              {item.username.charAt(0)}
             </Text>
-            <Icon name="IconPencil" size={24} />
-          </Pressable>
+          </VStack>
+          <Text type="heading" weight="small">
+            {item?.username}
+          </Text>
         </VStack>
         <VStack spacing={4}>
           <Text color={Color.shark['300']} type="label" weight="small">
-            Capacity
+            Limit
           </Text>
           <Pressable
-            onPress={() => capacityModalRef?.current?.present()}
+            onPress={() => limitModalRef?.current?.present()}
             shrink={false}
             items="center">
             <Text fill color={Color.shark['800']} type="heading" weight="small">
-              {currency(watch('capacity'), {
+              {currency(watch('limit'), {
                 pattern: `! #`,
                 symbol: 'Rp',
                 separator: '.',
@@ -132,27 +127,29 @@ const Add = () => {
             padding={8}>
             <Pressable
               shrink={false}
-              onPress={() => setValue('type', 'saving')}
+              onPress={() => setValue('status', 'Co-Owner')}
               borderRadius={5}
               backgroundColor={
-                watch('type') === 'saving' ? colors.primary : undefined
+                watch('status') === 'Co-Owner' ? colors.primary : undefined
               }
               padding={{
                 paddingVertical: 8,
                 paddingHorizontal: 16,
               }}>
               <Text
-                color={watch('type') === 'saving' ? '#fff' : Color.shark['300']}
+                color={
+                  watch('status') === 'Co-Owner' ? '#fff' : Color.shark['300']
+                }
                 type="label"
                 weight="small">
-                Saving
+                Co-Owner
               </Text>
             </Pressable>
             <Pressable
               shrink={false}
-              onPress={() => setValue('type', 'paying')}
+              onPress={() => setValue('status', 'Member')}
               backgroundColor={
-                watch('type') === 'paying' ? colors.primary : undefined
+                watch('status') === 'Member' ? colors.primary : undefined
               }
               borderRadius={5}
               padding={{
@@ -160,34 +157,16 @@ const Add = () => {
                 paddingHorizontal: 16,
               }}>
               <Text
-                color={watch('type') === 'paying' ? '#fff' : Color.shark['300']}
+                color={
+                  watch('status') === 'Member' ? '#fff' : Color.shark['300']
+                }
                 type="label"
                 weight="small">
-                Paying
+                Member
               </Text>
             </Pressable>
           </HStack>
         </VStack>
-        <VStack spacing={4}>
-          <Text color={Color.shark['200']} type="label" weight="small">
-            Monthly transfer
-          </Text>
-          <Pressable
-            onPress={() => monthlyModalRef?.current?.present()}
-            shrink={false}
-            items="center">
-            <Text fill color={Color.shark['800']} type="heading" weight="small">
-              {currency(watch('monthly'), {
-                pattern: `! #`,
-                symbol: 'Rp',
-                separator: '.',
-                precision: 0,
-              }).format()}
-            </Text>
-            <Icon name="IconPencil" size={24} />
-          </Pressable>
-        </VStack>
-
         <Pressable
           disabled={isSubmitting}
           onPress={handleOnPressSubmit}
@@ -201,7 +180,7 @@ const Add = () => {
           backgroundColor={isSubmitting ? Color.shark['300'] : colors.primary}>
           {!isSubmitting ? (
             <Text color={Color.shark['50']} type="subheading" weight="medium">
-              Add Pocket
+              Add Family
             </Text>
           ) : (
             <ActivityIndicator size="small" color="#fff" />
@@ -210,31 +189,14 @@ const Add = () => {
       </VStack>
 
       <Controller
-        name="name"
+        name="limit"
         control={control}
         rules={{
           required: true,
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <Modal
-            label="Pocket Name"
-            placeholder="Masukan name pocket kamu"
-            value={value}
-            onChangeText={onChange}
-            onBlur={onBlur}
-            ref={addNameModalRef}
-          />
-        )}
-      />
-      <Controller
-        name="capacity"
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({field: {onChange, onBlur, value}}) => (
-          <Modal
-            label="Capacity"
+            label="Limit"
             leading={
               <VStack items="center" justify="center" height={14}>
                 <Text
@@ -248,41 +210,11 @@ const Add = () => {
               </VStack>
             }
             keyboardType="numeric"
-            placeholder="Kapasitas pocket kamu"
+            placeholder="Limit family kamu"
             value={value}
             onChangeText={onChange}
             onBlur={onBlur}
-            ref={capacityModalRef}
-          />
-        )}
-      />
-      <Controller
-        name="monthly"
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({field: {onChange, onBlur, value, error}}) => (
-          <Modal
-            label="Monthly Transfer"
-            leading={
-              <VStack items="center" justify="center" height={14}>
-                <Text
-                  style={{
-                    lineHeight: 0,
-                  }}
-                  type="label"
-                  weight="small">
-                  Rp
-                </Text>
-              </VStack>
-            }
-            keyboardType="numeric"
-            placeholder="Monthly transfer kamu"
-            value={value}
-            onChangeText={onChange}
-            onBlur={onBlur}
-            ref={monthlyModalRef}
+            ref={limitModalRef}
           />
         )}
       />

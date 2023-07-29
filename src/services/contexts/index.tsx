@@ -8,6 +8,7 @@ import Toast from 'react-native-toast-message';
 import {UserProvider} from './User/User.provider';
 import {AccountProvider} from './Accounts/Account.provider';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {FamilyProvider} from './Family/Family.provider';
 
 const queryClient = new QueryClient();
 
@@ -17,14 +18,14 @@ const Provider = () => {
       <SafeAreaProvider>
         <UserProvider>
           <AccountProvider>
-            <ScrollProvider>
-              <GestureHandlerRootView style={{flex: 1}}>
-                <BottomSheetModalProvider>
+            <FamilyProvider>
+              <ScrollProvider>
+                <GestureHandlerRootView style={{flex: 1}}>
                   <RootNavigation />
                   <Toast />
-                </BottomSheetModalProvider>
-              </GestureHandlerRootView>
-            </ScrollProvider>
+                </GestureHandlerRootView>
+              </ScrollProvider>
+            </FamilyProvider>
           </AccountProvider>
         </UserProvider>
       </SafeAreaProvider>

@@ -1,16 +1,18 @@
 [
     {
         "id": 1,
+        "type": "saving",
         "monthly": 5000000,
         "name": "Tabungan Rumah",
         "now": 200000000,
-        "target": 500000000
+        "capacity": 500000000
     },
     {
         "id": 2,
+        "type": "saving",
         "monthly": 3000000,
         "name": "Tabungan Hari Tua",
         "now": 2000000,
-        "target": 5000000000
+        "capacity": 5000000000
     }
 ]

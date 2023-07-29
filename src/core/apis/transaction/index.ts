@@ -23,6 +23,19 @@ export const transaction = (data: {
   });
 };
 
+export const transactionCreate = data => {
+  return request(baseUrl('bankAccount/transaction/create'), {
+    method: 'post',
+    headers: {
+      Authorization: `Bearer ${data?.token}`,
+    },
+    data: {
+      senderAccountNo: data.from,
+      receiverAccountNo: data.receiver,
+      amount: data.amount,
+    },
+  });
+};
 export const transactionAll = (data: {token: string}) => {
   return request(baseUrl('bankAccount/info/all'), {
     method: 'post',
@@ -30,6 +43,10 @@ export const transactionAll = (data: {token: string}) => {
       Authorization: `Bearer ${data?.token}`,
     },
   });
+};
+
+export const useTransactionCreate = () => {
+  return useMutation(transactionCreate);
 };
 
 export const useTransaction = () => {

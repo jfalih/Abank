@@ -1,0 +1,202 @@
+[
+    {
+      "uid": 318,
+      "phoneNumber": "0819282734647",
+      "gender": "Woman",
+      "createTime": 1690626613785,
+      "ktpId": "9283917391729437",
+      "updateTime": 1690626613785,
+      "birthDate": "01072001",
+      "email": "galih@gmail.com",
+      "username": "GALIH AKBAR",
+      "bank": {
+        "uid": 318,
+        "balance": 100000,
+        "accountName": "GALIH AKBAR",
+        "createTime": 1690627242124,
+        "accountNo": "585945693803386",
+        "updateTime": 1690627242124,
+        "status": "Active"
+      }
+    },
+    {
+      "uid": 321,
+      "phoneNumber": "081293783292",
+      "gender": "Woman",
+      "createTime": 1690626685368,
+      "ktpId": "7193283481927491",
+      "updateTime": 1690626685368,
+      "birthDate": "01072001",
+      "email": "mamaakif@gmail.com",
+      "username": "MAMA AKIF",
+      "bank": {
+        "uid": 321,
+        "balance": 100000,
+        "accountName": "MAMA AKIF",
+        "createTime": 1690627394696,
+        "accountNo": "5859452962428941",
+        "updateTime": 1690627394696,
+        "status": "Active"
+      }
+    },
+    {
+      "uid": 323,
+      "phoneNumber": "081837284763",
+      "gender": "Woman",
+      "createTime": 1690626731507,
+      "ktpId": "1927482937817392",
+      "updateTime": 1690626731507,
+      "birthDate": "01072001",
+      "email": "abiya@gmail.com",
+      "username": "ABIYA",
+      "bank": {
+        "uid": 323,
+        "balance": 100000,
+        "accountName": "ABIYA",
+        "createTime": 1690627429763,
+        "accountNo": "5859456606014906",
+        "updateTime": 1690627429763,
+        "status": "Active"
+      }
+    },
+    {
+      "uid": 325,
+      "phoneNumber": "082837153716",
+      "gender": "Man",
+      "createTime": 1690626769626,
+      "ktpId": "2938197384652748",
+      "updateTime": 1690626769626,
+      "birthDate": "01072001",
+      "email": "jan@gmail.com",
+      "username": "JAN",
+      "bank": {
+        "uid": 325,
+        "balance": 100000,
+        "accountName": "JAN",
+        "createTime": 1690627558558,
+        "accountNo": "5859456858449492",
+        "updateTime": 1690627558558,
+        "status": "Active"
+      }
+    },
+    {
+      "uid": 327,
+      "phoneNumber": "081936445273",
+      "gender": "Man",
+      "createTime": 1690626861221,
+      "ktpId": "0293818392638541",
+      "updateTime": 1690626861221,
+      "birthDate": "01072001",
+      "email": "falih@gmail.com",
+      "username": "FALIH MAKRUF",
+      "bank": {
+        "uid": 327,
+        "balance": 100000,
+        "accountName": "FALIH MAKRUF",
+        "createTime": 1690627603386,
+        "accountNo": "5859455238515748",
+        "updateTime": 1690627603386,
+        "status": "Active"
+      }
+    },
+    {
+      "uid": 328,
+      "phoneNumber": "081763926713",
+      "gender": "Man",
+      "createTime": 1690626903474,
+      "ktpId": "87372896815731",
+      "updateTime": 1690626903474,
+      "birthDate": "01072001",
+      "email": "rahcmat@gmail.com",
+      "username": "RACHMAT DAYAT",
+      "bank": {
+        "uid": 328,
+        "balance": 100000,
+        "accountName": "RACHMAT DAYAT",
+        "createTime": 1690627657466,
+        "accountNo": "5859455768359307",
+        "updateTime": 1690627657466,
+        "status": "Active"
+      }
+    },
+    {
+      "uid": 329,
+      "phoneNumber": "082785761y816",
+      "gender": "Man",
+      "createTime": 1690626951880,
+      "ktpId": "27829074982613",
+      "updateTime": 1690626951880,
+      "birthDate": "01072001",
+      "email": "dayat@gmail.com",
+      "username": "DAYAT FADHILAH",
+      "bank": {
+        "uid": 329,
+        "balance": 100000,
+        "accountName": "DAYAT FADHILAH",
+        "createTime": 1690627685241,
+        "accountNo": "5859455568965576",
+        "updateTime": 1690627685241,
+        "status": "Active"
+      }
+    },
+    {
+      "uid": 331,
+      "phoneNumber": "08893079826",
+      "gender": "Man",
+      "createTime": 1690627001048,
+      "ktpId": "1987398268913",
+      "updateTime": 1690627001048,
+      "birthDate": "01072001",
+      "email": "muhi@gmail.com",
+      "username": "MUHAMMAD HIDAYAT",
+      "bank": {
+        "uid": 331,
+        "balance": 100000,
+        "accountName": "MUHAMMAD HIDAYAT",
+        "createTime": 1690627714400,
+        "accountNo": "5859456553151915",
+        "updateTime": 1690627714400,
+        "status": "Active"
+      }
+    },
+    {
+      "uid": 332,
+      "phoneNumber": "08682678258",
+      "gender": "Man",
+      "createTime": 1690627059464,
+      "ktpId": "34978629846289",
+      "updateTime": 1690627059464,
+      "birthDate": "01072001",
+      "email": "muhakif@gmail.com",
+      "username": "MUHAMMAD AKIF",
+      "bank": {
+        "uid": 332,
+        "balance": 100000,
+        "accountName": "MUHAMMAD AKIF",
+        "createTime": 1690627738579,
+        "accountNo": "5859451278197139",
+        "updateTime": 1690627738579,
+        "status": "Active"
+      }
+    },
+    {
+      "uid": 333,
+      "phoneNumber": "08891796813",
+      "gender": "Man",
+      "createTime": 1690627107426,
+      "ktpId": "78768616837671",
+      "updateTime": 1690627107426,
+      "birthDate": "01072001",
+      "email": "makfalih@gmail.com",
+      "username": "MAKRUF FALIH",
+      "bank": {
+        "uid": 333,
+        "balance": 100000,
+        "accountName": "MAKRUF FALIH",
+        "createTime": 1690627796974,
+        "accountNo": "585945648393003",
+        "updateTime": 1690627796974,
+        "status": "Active"
+      }
+    }
+  ]

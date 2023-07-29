@@ -1,11 +1,9 @@
 import React from 'react';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Onboarding from '../pages/Onboarding';
 import BottomNavigation from './BottomNavigation';
 import {Color} from '../components';
 import Login from '../pages/Auth/Login';
-import Register from '../pages/Auth/Register';
 import Transfer from '../pages/Transfer';
 import {useSessionStorage} from '../core/storage';
 import Saving from '../pages/Auth/Register/Saving';
@@ -13,9 +11,13 @@ import Account from '../pages/Auth/Register/Account';
 import Confirm from '../pages/Auth/Register/Confirm';
 import Username from '../pages/Auth/Register/Username';
 import Add from '../pages/Pocket/Add';
+import Member from '../pages/Family/Member';
+import {default as AddMember} from '../pages/Family/Member/Add';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
 import {useUser} from '../core/apis/auth/user';
 import {useUserContext} from '../services/contexts/User/User.context';
+import Detail from '../pages/Pocket/Detail';
+import TransferTo from '../pages/Transfer/TransferTo';
 
 const Native = createNativeStackNavigator();
 
@@ -71,22 +73,28 @@ const RootNavigation = React.memo(
             headerShown: false,
           }}>
           {!session ? (
-            <Native.Group>
+            <>
               <Native.Screen name="Login" component={Login} />
               <Native.Screen name="Account" component={Account} />
               <Native.Screen name="Confirm" component={Confirm} />
               <Native.Screen name="Username" component={Username} />
-            </Native.Group>
+            </>
           ) : (
-            <Native.Group>
+            <>
               <Native.Screen
                 name="BottomNavigation"
                 component={BottomNavigation}
               />
               <Native.Screen name="Transfer" component={Transfer} />
+              <Native.Screen name="TransferTo" component={TransferTo} />
+              <Native.Screen name="Member" component={Member} />
+
+              <Native.Screen name="AddMember" component={AddMember} />
+
               <Native.Screen name="Saving" component={Saving} />
+              <Native.Screen name="Detail" component={Detail} />
               <Native.Screen name="AddPocket" component={Add} />
-            </Native.Group>
+            </>
           )}
         </Native.Navigator>
       </NavigationContainer>

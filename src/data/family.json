@@ -1,0 +1,9 @@
+[
+    {
+        "name": "You",
+        "status": "Owner",
+        "now": 20000,
+        "gender": "Man",
+        "limit": 1000000
+    }
+]

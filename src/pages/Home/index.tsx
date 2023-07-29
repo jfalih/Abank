@@ -11,7 +11,11 @@ import {
 } from '../../components';
 import FastImage from 'react-native-fast-image';
 import Icon from '../../components/atoms/Icon';
-import {useNavigation, useTheme} from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useTheme,
+} from '@react-navigation/native';
 import {FlashList} from '@shopify/flash-list';
 import {Giveaway, Vector} from '../../assets';
 import {useWindowDimensions} from 'react-native';
@@ -20,8 +24,12 @@ import {useSessionStorage} from '../../core/storage';
 import {useUserContext} from '../../services/contexts/User/User.context';
 import {useCard} from '../../core/apis/card';
 import {useTransaction} from '../../core/apis/transaction';
+import currency from 'currency.js';
+import transactionsJsonOne from '../../data/transactions.json';
+import bank from '../../data/bank.json';
 
-const Card = () => {
+const Card = props => {
+  const {accountName, accountNo, status, balance} = props;
   const {colors} = useTheme();
   return (
     <Pressable
@@ -34,7 +42,7 @@ const Card = () => {
       backgroundColor={colors.card}>
       <HStack justify="space-between" items="center">
         <Text type="subheading" weight="large">
-          Rekening Utama
+          {accountName}
         </Text>
         <Icon size={24} name="IconArrowUpRight" />
       </HStack>
@@ -43,7 +51,12 @@ const Card = () => {
           Your Balance
         </Text>
         <Text type="subheading" weight="large" color={Color.shark['800']}>
-          Rp 323.203.232,00
+          {currency(balance || 0, {
+            pattern: `! #`,
+            symbol: 'Rp',
+            separator: '.',
+            precision: 0,
+          }).format()}
         </Text>
       </VStack>
       <VStack>
@@ -51,56 +64,41 @@ const Card = () => {
           Account Number
         </Text>
         <Text type="label" weight="xsmall" color={Color.shark['800']}>
-          13232030230230
+          {accountNo}
         </Text>
       </VStack>
     </Pressable>
   );
 };
 const Home = () => {
-  const ItemSeparatorComponent = () => <Divider horizontal thickness={12} />;
+  const ItemSeparatorComponent = () => <Divider horizontal thickness={24} />;
   const navigation = useNavigation();
   const {width} = useWindowDimensions();
   const [session] = useSessionStorage();
   const [accounts, setAccounts] = useState([]);
   const [activeAccount, setActiveAccount] = useState(0);
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState(transactionsJsonOne);
   const {data} = useUserContext();
 
   const {mutate: mutateCard} = useCard();
-  const {mutate: mutateTrx} = useTransaction();
-  useEffect(() => {
-    mutateCard(
-      {
-        token: session,
-      },
-      {
-        onSuccess(res) {
-          setAccounts(res.data.data.accounts);
+  useFocusEffect(
+    React.useCallback(() => {
+      mutateCard(
+        {
+          token: session,
         },
-        onError(err) {
-          console.log(err);
+        {
+          onSuccess(res) {
+            setAccounts(res.data.data.accounts);
+            setActiveAccount(res.data.data.accounts[0]?.accountNo);
+          },
+          onError(err) {
+            console.log(err);
+          },
         },
-      },
-    );
-    mutateTrx(
-      {
-        token: session,
-        accountNo: activeAccount,
-        traxType: ['TRANSFER_IN', 'TRANSFER_OUT'],
-        pageNumber: 1,
-        recordsPerPage: 10,
-      },
-      {
-        onSuccess(res) {
-          setTransactions(res.data?.data?.transactions);
-        },
-        onError(err) {
-          console.log(err);
-        },
-      },
-    );
-  }, [activeAccount, mutateCard, mutateTrx, session]);
+      );
+    }, [mutateCard, session]),
+  );
 
   const ListEmptyComponent = () => {
     return (
@@ -211,7 +209,7 @@ const Home = () => {
           ItemSeparatorComponent={ItemSeparatorComponent}
           estimatedItemSize={400}
           data={accounts}
-          renderItem={({item}) => <Card />}
+          renderItem={({item}) => <Card {...item} />}
         />
         <HStack
           padding={{
@@ -266,34 +264,37 @@ const Home = () => {
         }}
         padding={20}
         spacing={20}
+        style={{
+          minHeight: 600,
+        }}
         backgroundColor={Color.shark['50']}>
         {transactions?.length > 0 ? (
-          <>
+          <VStack spacing={8}>
             <Text type="heading" weight="xsmall" color={Color.shark['900']}>
               Recent Send
             </Text>
             <FlashList
               horizontal
-              data={[1, 2, 3]}
+              data={bank}
               ItemSeparatorComponent={ItemSeparatorComponent}
               renderItem={({item}) => (
                 <Pressable
+                  onPress={() => navigation.navigate('Transfer')}
                   direction="column"
                   items="center"
                   justify="center"
                   width={46}>
-                  <Box
+                  <VStack
+                    borderRadius={23}
+                    backgroundColor={'#fff'}
                     width={46}
                     height={46}
-                    borderRadius={28}
-                    as={
-                      <FastImage
-                        source={{
-                          uri: 'https://images.unsplash.com/photo-1690535922441-939fb8e6e933?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60',
-                        }}
-                      />
-                    }
-                  />
+                    items="center"
+                    justify="center">
+                    <Text type="label" weight="large">
+                      {item.username.charAt(0)}
+                    </Text>
+                  </VStack>
                   <Text type="label" weight="xsmall" color={Color.shark['300']}>
                     Mary
                   </Text>
@@ -305,41 +306,57 @@ const Home = () => {
             </Text>
             <FlashList
               data={transactions}
-              estimatedItemSize={200}
+              estimatedItemSize={400}
               ItemSeparatorComponent={() => <Divider thickness={20} />}
-              renderItem={({item}) => (
-                <HStack items="center" spacing={10}>
-                  <VStack
-                    items="center"
-                    justify="center"
-                    borderRadius={20}
-                    width={40}
-                    height={40}
-                    backgroundColor={'#fff'}>
-                    <Icon size={24} name="IconArrowUpRight" />
-                  </VStack>
-                  <VStack fill>
-                    <Text type="subheading" weight="small">
-                      Transfer To Atuti
-                    </Text>
-                    <Text type="label" weight="xsmall">
-                      04:34 PM
-                    </Text>
-                  </VStack>
-                  <Text type="label" weight="small">
-                    +Rp300.000
-                  </Text>
-                </HStack>
-              )}
+              renderItem={({item}) => {
+                if (typeof item === 'string') {
+                  return <Text>{item}</Text>;
+                } else {
+                  return (
+                    <HStack items="center" spacing={10}>
+                      <VStack
+                        items="center"
+                        justify="center"
+                        borderRadius={20}
+                        width={40}
+                        height={40}
+                        backgroundColor={'#fff'}>
+                        <Icon
+                          size={24}
+                          name={
+                            item.type === 'in'
+                              ? 'IconArrowDownLeft'
+                              : 'IconArrowUpRight'
+                          }
+                        />
+                      </VStack>
+                      <VStack fill>
+                        <Text type="subheading" weight="small">
+                          {item.name}
+                        </Text>
+                        <Text type="label" weight="xsmall">
+                          {item.time}
+                        </Text>
+                      </VStack>
+                      <Text
+                        type="label"
+                        color={item.type === 'in' ? '#479E11' : '#EE5045'}
+                        weight="small">
+                        {currency(item.number, {
+                          pattern: `! #`,
+                          symbol: 'Rp',
+                          separator: '.',
+                          precision: 0,
+                        }).format()}
+                      </Text>
+                    </HStack>
+                  );
+                }
+              }}
             />
-          </>
+          </VStack>
         ) : (
-          <VStack
-            fill
-            spacing={20}
-            padding={20}
-            items="center"
-            borderRadius={24}>
+          <VStack spacing={20} padding={20} items="center" borderRadius={24}>
             <VStack fill items="center">
               <Text fill type="heading" weight="xsmall">
                 No Transaction Yet
@@ -349,27 +366,6 @@ const Home = () => {
                 exciting features it has to offer!
               </Text>
             </VStack>
-
-            <Pressable
-              shrink={false}
-              onPress={() => navigation.navigate('Saving')}
-              items="center"
-              spacing={5}
-              borderRadius={8}
-              padding={{
-                paddingVertical: 10,
-                paddingHorizontal: 12,
-              }}
-              backgroundColor={Color.shark['800']}>
-              <Icon
-                color={Color.shark['50']}
-                name="IconLayoutGridAdd"
-                size={24}
-              />
-              <Text color={Color.shark['50']} type="subheading" weight="small">
-                Make a new account
-              </Text>
-            </Pressable>
           </VStack>
         )}
       </VStack>

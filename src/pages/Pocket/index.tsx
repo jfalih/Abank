@@ -20,13 +20,14 @@ import currency from 'currency.js';
 import pockets from '../../data/pocket.json';
 import {useAccountContext} from '../../services/contexts/Accounts/Account.context';
 import AddName from './Add/components/Modal';
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
 
 const Card = props => {
   const {colors} = useTheme();
-  const {name, target, now, savings} = props;
+  const {name, onPress, target, now, type, savings} = props;
   return (
     <Pressable
+      onPress={onPress}
       direction="column"
       borderRadius={24}
       fill
@@ -42,7 +43,7 @@ const Card = props => {
           items="center"
           justify="center"
           backgroundColor={Color.shark['50']}>
-          <Text>{name?.includes('Tabungan') ? '💰' : '🍔'}</Text>
+          <Text>{type === 'saving' ? '💰' : '🍔'}</Text>
         </VStack>
         <VStack fill>
           <Text type="subheading" weight="large">
@@ -229,9 +230,15 @@ const Pocket = () => {
             extraData={accounts}
             renderItem={({item}) => (
               <Card
+                onPress={() =>
+                  navigation.navigate('Detail', {
+                    id: item.id,
+                  })
+                }
                 name={item.name}
+                type={item.type}
                 now={item.now}
-                target={item.target}
+                target={item.capacity}
                 savings={item.monthly}
               />
             )}
