@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "monthly": 5000000,
+        "name": "Tabungan Rumah",
+        "now": 200000000,
+        "target": 500000000
+    },
+    {
+        "id": 2,
+        "monthly": 3000000,
+        "name": "Tabungan Hari Tua",
+        "now": 2000000,
+        "target": 5000000000
+    }
+]

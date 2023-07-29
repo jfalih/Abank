@@ -1,0 +1,45 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Hubot-Sans-Bold.ttf",
+      "sha1": "242fdd55e78ea5abca3e89d3df9920f3727b814c"
+    },
+    {
+      "path": "src/assets/fonts/Hubot-Sans-ExtraBold.ttf",
+      "sha1": "5d93718c16382ab3188a5e0be264643149cacadb"
+    },
+    {
+      "path": "src/assets/fonts/Hubot-Sans-Medium.ttf",
+      "sha1": "60843213877778a42a1d532d76b70237cdc68eea"
+    },
+    {
+      "path": "src/assets/fonts/Hubot-Sans-Regular.ttf",
+      "sha1": "300e197e4b7c8f109cd1505445f628f25f42b9fd"
+    },
+    {
+      "path": "src/assets/fonts/Hubot-Sans-SemiBold.ttf",
+      "sha1": "62bc436736a628c6a91ecbb3e67b3ddab7c8c366"
+    },
+    {
+      "path": "src/assets/fonts/Mona-Sans-Bold.ttf",
+      "sha1": "5a40107936da6de11ac31ec7b376cc2dcb2320e5"
+    },
+    {
+      "path": "src/assets/fonts/Mona-Sans-Light.ttf",
+      "sha1": "3283278aa54979f650e937c2d6359bbc41d35471"
+    },
+    {
+      "path": "src/assets/fonts/Mona-Sans-Medium.ttf",
+      "sha1": "357e19c85f50a69bd6f1b616b4df228acea17efe"
+    },
+    {
+      "path": "src/assets/fonts/Mona-Sans-Regular.ttf",
+      "sha1": "e49bd5b6f31933d56e63de0489fc919a06e7f78c"
+    },
+    {
+      "path": "src/assets/fonts/Mona-Sans-SemiBold.ttf",
+      "sha1": "221dfcd7ea67a5dab3b2051df607a8bfddab47cd"
+    }
+  ]
+}
