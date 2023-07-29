@@ -189,6 +189,7 @@ const Detail = ({route}) => {
             <Text>Request</Text>
           </Pressable>
           <Pressable
+            onPress={() => navigation.navigate('Saving')}
             backgroundColor={Color.shark['50']}
             items="center"
             justify="center"

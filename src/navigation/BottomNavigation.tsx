@@ -5,6 +5,7 @@ import {BottomNavbar} from '../components/molecules/BottomNavbar';
 import Icon from '../components/atoms/Icon';
 import Family from '../pages/Family';
 import Pocket from '../pages/Pocket';
+import Card from '../pages/Card';
 
 const TabStack = createBottomTabNavigator();
 
@@ -62,7 +63,7 @@ const BottomNavigation = React.memo(
             ),
           }}
           name="Card"
-          component={Home}
+          component={Card}
         />
       </TabStack.Navigator>
     );
