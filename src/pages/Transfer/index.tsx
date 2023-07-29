@@ -40,7 +40,7 @@ const Transfer = () => {
       Toast.show({
         type: 'error',
         text1: 'Hmm.. kami nemu error nih!',
-        text2: (e as Error).message,
+        text2: 'Kami tidak menemukan akun!',
       });
     }
   };
